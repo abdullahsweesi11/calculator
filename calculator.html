@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <script>
+        let keys = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '.', '0', '=']
+        let ops = ['/', '*', '-', '+']
+        
+        document.write('<input type="text" id="Display">')
+
+        document.write('<button onclick="ClearDisplay()">CLR</button>') // clears the display - extra functionality
+
+        document.write('<br>')
+   
+        for (let i = 0; i < keys.length; i++) {
+            if (keys[i] == '='){
+                document.write('<button onclick="doCalc(\'' + keys[i] + '\')">' + keys[i] + '</button>');
+            } else {
+                document.write('<button onclick="AddToDisplay(' + keys[i] +')">' + keys[i] + '</button>')
+            }
+
+            if (i % 3 == 2) {
+                op = ops.pop()
+                document.write('<button onclick="doCalc(\'' + op  + '\')">' + op + '</button>')
+                document.write('<br>')
+            }
+        }
+
+        document.write('<input type="text" id="preValue" value="0">')
+        document.write('<input type="text" id="preOp" value="+">')
+
+
+
+        function AddToDisplay(input) {
+            let currentValue = document.getElementById('Display').value;
+            currentValue += input
+            document.getElementById('Display').value = currentValue
+        }
+
+        function doCalc(op) {
+            preValue = Number(document.getElementById('preValue').value);
+            preOp = document.getElementById('preOp').value;
+            currentVal = Number(document.getElementById('Display').value);
+
+            if (preOp == '+') {
+                newValue = preValue + currentVal;
+            }
+            if (preOp == '-') {
+                newValue = preValue - currentVal;
+            }
+            if (preOp == '*') {
+                newValue = preValue * currentVal;
+            }
+            if (preOp == '/') {
+                newValue = preValue / currentVal;
+            }
+
+            document.getElementById('Display').value = '';
+            document.getElementById('preOp').value = op;
+            document.getElementById('preValue').value = newValue;
+
+            if (op == '=') {
+                document.getElementById('Display').value = newValue
+            }
+        }
+
+        function ClearDisplay(){
+            document.getElementById('Display').value = '';
+            document.getElementById('preOp').value = '+';
+            document.getElementById('preValue').value = '0';
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
